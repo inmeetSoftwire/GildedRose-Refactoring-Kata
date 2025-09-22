@@ -50,5 +50,10 @@ describe('Gilded Rose Approval', () => {
        
     expect(gameConsoleOutput).toMatchSnapshot();
   });
-
+  
+  it('should twoDays', () => {
+    require('../golden-master-text-test.ts');
+       
+    expect(gameConsoleOutput).toMatchSnapshot();
+  })
 });
