@@ -27,4 +27,14 @@ describe('Gilded Rose', () => {
     }])
   })
 
+  it('does not allow items quality to become negative', () => {
+    const gildedRose = new GildedRose([new Item("+5 Dexterity Vest", -5, 0)]);
+    const items = gildedRose.updateQuality()
+    expect(items).toEqual([{
+      name: "+5 Dexterity Vest",
+      sellIn: -6,
+      quality: 0
+    }])
+  })
+
 });
