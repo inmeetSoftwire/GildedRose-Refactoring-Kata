@@ -84,4 +84,53 @@ describe('Gilded Rose', () => {
       },
     ])
   })
+
+  it('does not allow quality of items to go above 50', () => {
+    const gildedRose = new GildedRose(
+      [
+        new Item("Aged Brie", 5, 50),
+        new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+        new Item("Elixir of the Mongoose", 5, 49)
+      ]);
+    const items = gildedRose.updateQuality()
+    expect(items).toEqual([
+      {
+        name: "Aged Brie",
+        sellIn: 4,
+        quality: 50
+      }, 
+      {
+        name: "Backstage passes to a TAFKAL80ETC concert",
+        sellIn: 4,
+        quality: 50
+      },
+      {
+        name: "Elixir of the Mongoose",
+        sellIn: 4,
+        quality: 48
+      },
+    ])
+  })
+
+  it('"Sulfuras" items are unchanged', () => {
+    const gildedRose = new GildedRose(
+      [
+        new Item("Sulfuras", 0, 80),
+         new Item("Sulfuras, Hand of Ragnaros", -1, 80)
+      ]);
+    const items = gildedRose.updateQuality()
+    expect(items).toEqual([
+      {
+        name: "Sulfuras",
+        sellIn: 0,
+        quality: 80
+      }, 
+      {
+        name: "Sulfuras, Hand of Ragnaros",
+        sellIn: -1,
+        quality: 80
+      },
+    ])
+  })
+
 });
