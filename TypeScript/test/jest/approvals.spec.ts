@@ -29,6 +29,7 @@ describe('Gilded Rose Approval', () => {
     originalConsoleLog = console.log;
     console.log = gameConsoleLog;
     originalProcessArgv = process.argv;
+    jest.resetModules();
   });
 
   afterEach(() => {
@@ -52,6 +53,7 @@ describe('Gilded Rose Approval', () => {
   });
   
   it('should twoDays', () => {
+    process.argv = ["<node>", "<script", "2"];
     require('../golden-master-text-test.ts');
        
     expect(gameConsoleOutput).toMatchSnapshot();
