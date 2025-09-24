@@ -19,36 +19,30 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name === 'Sulfuras, Hand of Ragnaros') {
+      if (this.items[i].name.startsWith('Sulfuras')) {
         continue;
       }
-      let qualityChange = this.items[i].sellIn < 1 ? 2 : 1
+
+      let qualityChange = 0
       
       if (this.items[i].name === 'Aged Brie') {
         qualityChange = this.items[i].sellIn < 1 ? 2 : 1
       } else if (this.items[i].name === 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].quality < 50) {
-          if (this.items[i].sellIn < 6) {
-            qualityChange = 3
-          } else if (this.items[i].sellIn < 11) {
-            qualityChange = 2;
-          } else {
-            qualityChange = 1
-          }
+        if (this.items[i].sellIn < 6) {
+          qualityChange = 3
+        } else if (this.items[i].sellIn < 11) {
+          qualityChange = 2;
+        } else {
+          qualityChange = 1
         }
       } else {
-        if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
           qualityChange = this.items[i].sellIn < 1 ? -2 : -1
-        }
       }
       const finalQuality = this.items[i].quality + qualityChange
       this.items[i].quality = Math.min(Math.max(0, finalQuality), 50)
       
-
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn -= 1;
-      }
-      
+      this.items[i].sellIn -= 1;
+            
       if (this.items[i].sellIn < 0 && this.items[i].name === 'Backstage passes to a TAFKAL80ETC concert') {
         this.items[i].quality = 0
       }
