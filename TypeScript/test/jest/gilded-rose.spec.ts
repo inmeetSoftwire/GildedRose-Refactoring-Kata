@@ -133,4 +133,37 @@ describe('Gilded Rose', () => {
     ])
   })
 
+  it('"Backstage passes" are unchanged', () => {
+    const gildedRose = new GildedRose(
+      [
+        new Item("Backstage passes to Softwire Christmas Party", 12, 40),
+        new Item("Backstage passes to Ryan's 27th Birthday Bash", 9, 40),
+        new Item("Backstage passes to Cambridge University", 3, 40),
+         new Item("Backstage passes to Company Meeting", 0, 40)
+      ]);
+    const items = gildedRose.updateQuality()
+    expect(items).toEqual([
+      {
+        name: "Backstage passes to Softwire Christmas Party",
+        sellIn: 11,
+        quality: 41
+      }, 
+      {
+        name: "Backstage passes to Ryan's 27th Birthday Bash",
+        sellIn: 8,
+        quality: 42
+      },
+      {
+        name: "Backstage passes to Cambridge University",
+        sellIn: 2,
+        quality: 43
+      },
+      {
+        name: "Backstage passes to Company Meeting",
+        sellIn: -1,
+        quality: 0
+      },
+    ])
+  })
+
 });
