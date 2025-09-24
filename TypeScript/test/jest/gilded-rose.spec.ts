@@ -37,4 +37,25 @@ describe('Gilded Rose', () => {
     }])
   })
 
+  it('aged brie increases in quality the older it gets', () => {
+    const gildedRose = new GildedRose(
+      [
+        new Item("Aged Brie", 10, 0),
+        new Item("Aged Brie", -8, 0)
+      ]);
+    const items = gildedRose.updateQuality()
+    expect(items).toEqual([
+      {
+        name: "Aged Brie",
+        sellIn: 9,
+        quality: 1
+      }, 
+      {
+        name: "Aged Brie",
+        sellIn: -9,
+        quality: 2
+      }
+    ])
+  })
+
 });
