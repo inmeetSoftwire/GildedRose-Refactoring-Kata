@@ -41,9 +41,11 @@ export class GildedRose {
     
   }
 
-  getItemQuality(currentQuality, qualityChange) {
-    const finalQuality = currentQuality + qualityChange
-    return Math.min(Math.max(0, finalQuality), 50)
+  changeItemQuality(index: number, qualityChange : number) {
+    let finalQuality = this.items[index].quality + qualityChange
+    finalQuality = Math.min(50, finalQuality)
+    finalQuality = Math.max(0, finalQuality)
+    this.items[index].quality = finalQuality
   }
 
   updateQuality() {
@@ -80,7 +82,7 @@ export class GildedRose {
         qualityChange *= 2
       }
       
-      this.items[i].quality = this.getItemQuality(this.items[i].quality, qualityChange)
+      this.changeItemQuality(i, qualityChange)
       this.items[i].sellIn -= 1;
       
     }
