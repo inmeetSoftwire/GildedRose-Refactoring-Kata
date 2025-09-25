@@ -16,7 +16,7 @@ export class GildedRose {
   constructor(items = [] as Array<Item>) {
     this.items = items;
   }
-  handleBackstagePassQuality(index: number) {
+  getBackstagePassQualityChange(index: number) {
 
     // if (this.items[index].sellIn <= 0) {
     //   return -this.items[index].quality
@@ -40,6 +40,12 @@ export class GildedRose {
     return qualityChange
     
   }
+
+  getItemQuality(currentQuality, qualityChange) {
+    const finalQuality = currentQuality + qualityChange
+    return Math.min(Math.max(0, finalQuality), 50)
+  }
+
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i].name.includes('Sulfuras')) {
@@ -62,7 +68,7 @@ export class GildedRose {
           break
         }
         case (this.items[i].name.includes('Backstage passes')): {
-          qualityChange = this.handleBackstagePassQuality(i)
+          qualityChange = this.getBackstagePassQualityChange(i)
           break
         }
         default: {
@@ -73,10 +79,8 @@ export class GildedRose {
       if (this.items[i].name.includes("Conjured")) {
         qualityChange *= 2
       }
-
-      const finalQuality = this.items[i].quality + qualityChange
-      this.items[i].quality = Math.min(Math.max(0, finalQuality), 50)
       
+      this.items[i].quality = this.getItemQuality(this.items[i].quality, qualityChange)
       this.items[i].sellIn -= 1;
       
     }
