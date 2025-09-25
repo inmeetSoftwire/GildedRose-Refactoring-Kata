@@ -17,15 +17,28 @@ export class GildedRose {
     this.items = items;
   }
   handleBackstagePassQuality(index: number) {
-    if (this.items[index].sellIn <= 0) {
-      return -this.items[index].quality
-    } else if (this.items[index].sellIn <= 5) {
-      return 3
-    } else if (this.items[index].sellIn <= 10) {
-      return 2;
-    } else {
-      return 1
+
+    // if (this.items[index].sellIn <= 0) {
+    //   return -this.items[index].quality
+    // } else if (this.items[index].sellIn <= 5) {
+    //   return 3
+    // } else if (this.items[index].sellIn <= 10) {
+    //   return 2;
+    // } else {
+    //   return 1
+    // }
+
+    let qualityChange = 1;
+    switch (true) {
+      case (this.items[index].sellIn <= 0):
+        return -this.items[index].quality;
+      case (this.items[index].sellIn <= 5):
+        qualityChange++;
+      case (this.items[index].sellIn <= 10):
+        qualityChange++;
     }
+    return qualityChange
+    
   }
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
@@ -35,12 +48,26 @@ export class GildedRose {
 
       let qualityChange = 0
       
-      if (this.items[i].name === 'Aged Brie') {
-        qualityChange = this.items[i].sellIn <= 0 ? 2 : 1
-      } else if (this.items[i].name.includes('Backstage passes')) {
-        qualityChange = this.handleBackstagePassQuality(i)
-      } else {
+      // if (this.items[i].name === 'Aged Brie') {
+      //   qualityChange = this.items[i].sellIn <= 0 ? 2 : 1
+      // } else if (this.items[i].name.includes('Backstage passes')) {
+      //   qualityChange = this.handleBackstagePassQuality(i)
+      // } else {
+      //     qualityChange = this.items[i].sellIn <= 0 ? -2 : -1
+      // }
+
+      switch (true) {
+        case (this.items[i].name === 'Aged Brie') : {
+          qualityChange = this.items[i].sellIn <= 0 ? 2 : 1
+          break
+        }
+        case (this.items[i].name.includes('Backstage passes')): {
+          qualityChange = this.handleBackstagePassQuality(i)
+          break
+        }
+        default: {
           qualityChange = this.items[i].sellIn <= 0 ? -2 : -1
+        }
       }
 
       if (this.items[i].name.includes("Conjured")) {
