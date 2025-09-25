@@ -1,4 +1,5 @@
 import { Item, GildedRose } from '@/gilded-rose';
+import { goldenMasterTest } from '../golden-master-text-test';
 
 /**
  * This unit test uses [Jest Snapshot](https://goo.gl/fbAQLP).
@@ -29,7 +30,6 @@ describe('Gilded Rose Approval', () => {
     originalConsoleLog = console.log;
     console.log = gameConsoleLog;
     originalProcessArgv = process.argv;
-    jest.resetModules();
   });
 
   afterEach(() => {
@@ -46,15 +46,13 @@ describe('Gilded Rose Approval', () => {
   });
 
   it('should thirtyDays', () => {
-    process.argv = ["<node>", "<script", "30"];
-    require('../golden-master-text-test.ts');
+    goldenMasterTest(30)
        
     expect(gameConsoleOutput).toMatchSnapshot();
   });
   
   it('should twoDays', () => {
-    process.argv = ["<node>", "<script", "2"];
-    require('../golden-master-text-test.ts');
+    goldenMasterTest(2)
        
     expect(gameConsoleOutput).toMatchSnapshot();
   })
