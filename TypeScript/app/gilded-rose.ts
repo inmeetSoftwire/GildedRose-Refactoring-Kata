@@ -16,7 +16,17 @@ export class GildedRose {
   constructor(items = [] as Array<Item>) {
     this.items = items;
   }
-
+  handleBackstagePassQuality(index: number) {
+    if (this.items[index].sellIn <= 0) {
+      return -this.items[index].quality
+    } else if (this.items[index].sellIn <= 5) {
+      return 3
+    } else if (this.items[index].sellIn <= 10) {
+      return 2;
+    } else {
+      return 1
+    }
+  }
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i].name.includes('Sulfuras')) {
@@ -28,15 +38,7 @@ export class GildedRose {
       if (this.items[i].name === 'Aged Brie') {
         qualityChange = this.items[i].sellIn <= 0 ? 2 : 1
       } else if (this.items[i].name.includes('Backstage passes')) {
-        if (this.items[i].sellIn <= 0) {
-          qualityChange = -this.items[i].quality
-        } else if (this.items[i].sellIn <= 5) {
-          qualityChange = 3
-        } else if (this.items[i].sellIn <= 10) {
-          qualityChange = 2;
-        } else {
-          qualityChange = 1
-        }
+        qualityChange = this.handleBackstagePassQuality(i)
       } else {
           qualityChange = this.items[i].sellIn <= 0 ? -2 : -1
       }
